@@ -81,25 +81,22 @@ donationModal.addEventListener('click', (e) => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
-        
-        // Don't prevent default for actual page sections
-        if (href === '#home' || href === '#about' || href === '#services' || 
-            href === '#activities' || href === '#gallery' || href === '#committee' || href === '#contact') {
+        if (!href || href === '#') return;
+
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
             e.preventDefault();
-            
+
             // Close mobile menu if open
             mobileMenu.classList.remove('active');
             menuOverlay.classList.remove('active');
-            
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-            }
+
+            window.scrollTo({
+                top: targetElement.offsetTop - 100,
+                behavior: 'smooth'
+            });
         }
     });
 });
@@ -141,16 +138,15 @@ if (contactForm) {
             if (response.ok) {
                 // Success - show message
                 formMessage.style.display = 'block';
-                formMessage.innerHTML = `
-                    <div style="padding: 15px; border-radius: 5px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
-                        <i class="fas fa-check-circle" style="margin-right: 10px; color: #28a745;"></i>
-                        <strong>✅ Message Sent Successfully!</strong><br>
-                        Thank you <strong>${name}</strong>! Your message has been sent to:<br>
-                        ✉️ Email: <strong>omsrivenkatamba@gmail.com</strong><br>
-                        📱 SMS: <strong>+91 8309 545 660</strong><br>
-                        We will contact you soon at ${phone || email}.
-                    </div>
-                `;
+                const successDiv = document.createElement('div');
+                successDiv.style.cssText = 'padding: 15px; border-radius: 5px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;';
+                successDiv.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 10px; color: #28a745;"></i><strong>✅ Message Sent Successfully!</strong><br>';
+                const thankYou = document.createTextNode('Thank you ' + name + '! We will contact you soon at ');
+                successDiv.appendChild(thankYou);
+                const contactRef = document.createTextNode(phone || email);
+                successDiv.appendChild(contactRef);
+                formMessage.innerHTML = '';
+                formMessage.appendChild(successDiv);
                 
                 // Scroll to show message
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
