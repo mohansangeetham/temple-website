@@ -81,7 +81,7 @@ donationModal.addEventListener('click', (e) => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
-        if (!href || href === '#') return;
+        if (href === '#') return;
 
         const targetId = href.substring(1);
         const targetElement = document.getElementById(targetId);
@@ -140,11 +140,16 @@ if (contactForm) {
                 formMessage.style.display = 'block';
                 const successDiv = document.createElement('div');
                 successDiv.style.cssText = 'padding: 15px; border-radius: 5px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;';
-                successDiv.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 10px; color: #28a745;"></i><strong>✅ Message Sent Successfully!</strong><br>';
-                const thankYou = document.createTextNode('Thank you ' + name + '! We will contact you soon at ');
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-check-circle';
+                icon.style.cssText = 'margin-right: 10px; color: #28a745;';
+                const bold = document.createElement('strong');
+                bold.textContent = '✅ Message Sent Successfully!';
+                successDiv.appendChild(icon);
+                successDiv.appendChild(bold);
+                successDiv.appendChild(document.createElement('br'));
+                const thankYou = document.createTextNode('Thank you ' + name + '! We will contact you soon at ' + (phone || email));
                 successDiv.appendChild(thankYou);
-                const contactRef = document.createTextNode(phone || email);
-                successDiv.appendChild(contactRef);
                 formMessage.innerHTML = '';
                 formMessage.appendChild(successDiv);
                 

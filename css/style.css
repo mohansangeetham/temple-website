@@ -802,3 +802,49 @@ textarea.form-control {
     font-size: 0.9rem;
     margin-bottom: 10px;
 }
+
+/* Gallery Section */
+.gallery-section {
+    padding: 40px 0;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-caption {
+    padding: 15px;
+    background: var(--white);
+}
+
+.gallery-caption h4 {
+    color: var(--dark-red);
+    margin-bottom: 5px;
+}
+
+.gallery-caption p {
+    font-size: 0.9rem;
+    color: #666;
+}
