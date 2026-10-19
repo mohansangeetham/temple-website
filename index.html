@@ -111,7 +111,7 @@
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#committee">Committee</a></li>
             <li><a href="#contact">Contact Us</a></li>
-            <li><a href="#donate" class="donate-btn" style="color: white; margin-top: 10px; text-align: center;">Donate Now</a></li>
+            <li><a href="#donate" class="donate-btn" id="donateLink" style="color: white; margin-top: 10px; text-align: center;">Donate Now</a></li>
         </ul>
     </div>
     
@@ -240,7 +240,7 @@
                             <p><strong>UPI ID:</strong> omsrivenkatamba@upi</p>
                         </div>
                         
-                        <button class="donate-btn">Donate Now</button>
+                        <button class="donate-btn" id="donateBtn2">Donate Now</button>
                     </div>
                 </div>
             </div>
@@ -986,7 +986,25 @@
                 <button id="closeModal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark-gray);">&times;</button>
             </div>
             
-            <div class="donation-details">
+            <div id="donationAmountSection" style="margin-bottom: 20px;">
+                <h3 style="color: var(--dark-red);">Choose Amount (₹)</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0;">
+                    <button type="button" class="amount-btn" data-amount="100">₹100</button>
+                    <button type="button" class="amount-btn" data-amount="500">₹500</button>
+                    <button type="button" class="amount-btn" data-amount="1000">₹1000</button>
+                    <button type="button" class="amount-btn" data-amount="5000">₹5000</button>
+                </div>
+                <input type="number" id="customAmount" min="1" step="1" placeholder="Or enter other amount" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                <h3 style="color: var(--dark-red); margin-top: 15px;">Pay Using</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                    <button type="button" id="payUpiBtn" class="donate-btn">UPI (GPay / PhonePe / Paytm)</button>
+                    <button type="button" id="payCardBtn" class="donate-btn">Debit / Credit Card / Net Banking</button>
+                    <button type="button" id="payBankBtn" class="donate-btn">Bank Transfer / QR Code</button>
+                </div>
+                <p id="donationMsg" style="color: var(--dark-red); margin-top: 10px; min-height: 1.2em;"></p>
+            </div>
+
+            <div class="donation-details" id="donationDetails">
                 <h3>Bank Transfer Details:</h3>
                 <p><strong>Account Name:</strong> Srivenkatamba Temple</p>
                 <p><strong>Account No:</strong> 6866890630</p>

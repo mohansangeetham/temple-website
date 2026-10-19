@@ -58,8 +58,66 @@ const donationModal = document.getElementById('donationModal');
 const closeModal = document.getElementById('closeModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
 
-donateBtn.addEventListener('click', () => {
-    donationModal.style.display = 'flex';
+['donateBtn', 'donateBtn2', 'donateLink'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            donationModal.style.display = 'flex';
+        });
+    }
+});
+
+// Donation amount & payment options
+// For card/net banking set this to your payment gateway link (e.g. a Razorpay Payment Link).
+const CARD_PAYMENT_URL = '';
+const UPI_ID = 'omsrivenkatamba@upi';
+const customAmount = document.getElementById('customAmount');
+const donationMsg = document.getElementById('donationMsg');
+
+document.querySelectorAll('.amount-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        customAmount.value = btn.dataset.amount;
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        donationMsg.textContent = '';
+    });
+});
+customAmount.addEventListener('input', () => {
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+});
+
+function getAmount() {
+    const amt = parseFloat(customAmount.value);
+    if (!amt || amt <= 0) {
+        donationMsg.textContent = 'Please select or enter a donation amount.';
+        return null;
+    }
+    return amt;
+}
+
+document.getElementById('payUpiBtn').addEventListener('click', () => {
+    const amt = getAmount();
+    if (!amt) return;
+    window.location.href = 'upi://pay?pa=' + encodeURIComponent(UPI_ID) +
+        '&pn=' + encodeURIComponent('Srivenkatamba Temple') +
+        '&am=' + amt.toFixed(2) + '&cu=INR&tn=' + encodeURIComponent('Temple Donation');
+    donationMsg.textContent = 'On desktop, please scan the QR code below with any UPI app.';
+});
+
+document.getElementById('payCardBtn').addEventListener('click', () => {
+    const amt = getAmount();
+    if (!amt) return;
+    if (CARD_PAYMENT_URL) {
+        window.open(CARD_PAYMENT_URL + (CARD_PAYMENT_URL.includes('?') ? '&' : '?') + 'amount=' + amt, '_blank', 'noopener');
+    } else {
+        donationMsg.textContent = 'Online card payment is coming soon. Please use UPI or bank transfer.';
+    }
+});
+
+document.getElementById('payBankBtn').addEventListener('click', () => {
+    if (!getAmount()) return;
+    document.getElementById('donationDetails').scrollIntoView({ behavior: 'smooth' });
 });
 
 closeModal.addEventListener('click', () => {
